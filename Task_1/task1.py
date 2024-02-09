@@ -63,6 +63,24 @@ plt.tight_layout()
 plt.savefig('monthly_sales_2022_2023.png')
 plt.show()
 
+#################################################################################################
+# Add 'Month-Year' column to simplify grouping by month and year
+customer_buys['MonthYear'] = customer_buys['Date'].dt.strftime('%Y-%m')
+
+# Group data by 'MonthYear' and 'Product', then count the occurrences to get sales
+monthly_product_sales = customer_buys.groupby(['MonthYear', 'Product']).size().reset_index(name='Sales')
+
+# Sort the sales within each 'MonthYear' to get the top product
+monthly_product_sales_sorted = monthly_product_sales.sort_values(by=['MonthYear', 'Sales'], ascending=[True, False])
+
+# Drop duplicates to keep only the top product for each 'MonthYear'
+top_product_per_month = monthly_product_sales_sorted.drop_duplicates(subset=['MonthYear'], keep='first').sort_values(by='MonthYear')
+
+# Save to CSV
+top_product_per_month.to_csv('top_product_per_month.csv', index=False)
+#################################################################################################
+
+
 # Best customers based on buying frequency, not by total amount spent.
 best_customers = customer_buys.groupby(customer_buys['CustomerID']).size().sort_values(ascending=False)
 top_customers = best_customers.head(10)
