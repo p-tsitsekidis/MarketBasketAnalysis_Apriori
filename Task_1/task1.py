@@ -12,7 +12,7 @@ customer_age = pd.read_csv('/home/petros/Desktop/mini_market/customerAge.txt', d
 merged_data = pd.merge(customer_buys, customer_age, on='CustomerID')
 merged_data.to_csv('/home/petros/Desktop/mini_market/Task_1/merged_customer_data.csv', index=False)
 
-# Popularity
+# Popularity Plots
 product_counts = customer_buys['Product'].value_counts().sort_values(ascending=False)
 product_counts.to_csv('product_popularity_data.csv', header=['Number of Purchases'])
 top_product_counts = customer_buys['Product'].value_counts().sort_values(ascending=False).head(20) # Show top 20.
@@ -49,7 +49,7 @@ sales_2023 = customer_buys[filter_2023]
 monthly_sales_2022 = sales_2022.groupby(sales_2022['Date'].dt.month).size()
 monthly_sales_2023 = sales_2023.groupby(sales_2023['Date'].dt.month).size()
 
-# Month popularity for each year
+# Sales per Month Plot
 plt.figure(figsize=(12, 6))
 monthly_sales_2022.plot(kind='line', marker='o', label='2022')
 monthly_sales_2023.plot(kind='line', marker='o', label='2023')
@@ -67,6 +67,7 @@ plt.show()
 best_customers = customer_buys.groupby(customer_buys['CustomerID']).size().sort_values(ascending=False)
 top_customers = best_customers.head(10)
 
+# Best customers plot
 plt.figure(figsize=(12, 6))
 top_customers.plot(kind='bar')
 plt.title('Top 10 Customers by Number of Purchases')
