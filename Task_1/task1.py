@@ -18,12 +18,23 @@ product_counts.to_csv('product_popularity_data.csv', header=['Number of Purchase
 top_product_counts = customer_buys['Product'].value_counts().sort_values(ascending=False).head(20) # Show top 20.
 plt.figure(figsize=(20, 10))
 top_product_counts.plot(kind='bar')
-plt.title('Product Popularity')
+plt.title('Most Popular')
 plt.xlabel('Product')
 plt.ylabel('Number of Purchases')
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig('product_popularity_plot.png')
+plt.savefig('top_product_popularity_plot.png')
+plt.show()
+
+bottom_product_counts = customer_buys['Product'].value_counts().sort_values(ascending=True).head(20) # Show bottom 20.
+plt.figure(figsize=(20, 10))
+bottom_product_counts.plot(kind='bar')
+plt.title('Least Popular')
+plt.xlabel('Product')
+plt.ylabel('Number of Purchases')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('bottom_product_popularity_plot.png')
 plt.show()
 
 # Sales by Month
