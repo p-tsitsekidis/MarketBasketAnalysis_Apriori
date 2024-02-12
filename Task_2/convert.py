@@ -1,21 +1,19 @@
 import pandas as pd
 
+# Load the dataset
 df = pd.read_csv('/home/petros/Desktop/mini_market/customerBuys.csv')
 
-# Create a unique identifier for each transaction
-df['TransactionID'] = df.groupby(['CustomerID', 'Date']).ngroup()
+# Find each unique transaction
+df['GroupID'] = df.groupby(['CustomerID', 'Date']).ngroup()
 
 # Create a binary matrix
-binary_matrix = pd.crosstab(index=df['TransactionID'], columns=df['Product'])
+binary_matrix = pd.crosstab(index=df['GroupID'], columns=df['Product'])
 
-# Convert all non-zero values to 1
-for column in binary_matrix.columns:
-    binary_matrix[column] = binary_matrix[column].apply(lambda x: 'y' if x != 0 else '?')
+# 'y' for bought item and '?' for the absence of an item
+binary_matrix = binary_matrix.applymap(lambda x: 'y' if x > 0 else '?')
 
-# Optionally, reset the index to make 'TransactionID' a column
-binary_matrix.reset_index(inplace=True)
+# Remove the index
+binary_matrix.reset_index(drop=True, inplace=True)
 
-binary_matrix = binary_matrix.drop(columns=['TransactionID'])
-
-# Save the binary matrix to a CSV file
+# Result
 binary_matrix.to_csv('binary_matrix.csv', index=False)
