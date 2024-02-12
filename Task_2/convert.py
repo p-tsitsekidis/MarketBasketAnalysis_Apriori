@@ -10,7 +10,7 @@ df['GroupID'] = df.groupby(['CustomerID', 'Date']).ngroup()
 binary_matrix = pd.crosstab(index=df['GroupID'], columns=df['Product'])
 
 # 'y' for bought item and '?' for the absence of an item
-binary_matrix = binary_matrix.applymap(lambda x: 'y' if x > 0 else '?')
+binary_matrix = binary_matrix.map(lambda x: 'y' if x > 0 else '?')
 
 # Remove the index
 binary_matrix.reset_index(drop=True, inplace=True)
