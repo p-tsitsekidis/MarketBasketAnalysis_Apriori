@@ -1,16 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-buys = ['CustomerID', 'Date', 'Product']
-age = ['CustomerID', 'Age']
-
 # Load the Data
-customer_buys = pd.read_csv('/home/petros/Desktop/mini_market/customerBuys.txt', delimiter='\t', names=buys)
-customer_age = pd.read_csv('/home/petros/Desktop/mini_market/customerAge.txt', delimiter='\t', names=age)
-
-# Merging customer_buys with customer_age
-merged_data = pd.merge(customer_buys, customer_age, on='CustomerID')
-merged_data.to_csv('/home/petros/Desktop/mini_market/Task_1/merged_customer_data.csv', index=False)
+customer_buys = pd.read_csv('/home/petros/Desktop/mini_market/customerBuys.csv')
 
 # Popularity Plots
 product_counts = customer_buys['Product'].value_counts().sort_values(ascending=False)
