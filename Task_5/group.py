@@ -1,6 +1,5 @@
 import pandas as pd
 
-# Load Data
 unique_items_path = '/home/petros/Desktop/mini_market/Task_1/product_popularity_data.csv'
 purchases_path = '/home/petros/Desktop/mini_market/customerBuys.csv'
 
@@ -24,15 +23,13 @@ product_groups = {
     'Foods': [22, 47, 76, 86, 104, 107, 108, 127, 148, 154]
 }
 
-# Inverting the dictionary for easier lookup
+# Inverting the dictionary
 line_to_group = {}
 for group, lines in product_groups.items():
     for line in lines:
-        # Adjust for 0-based indexing
-        product_name = unique_items_df.loc[line - 2, 'Product']  # -2 because of 0-index and header row
+        product_name = unique_items_df.loc[line - 2, 'Product']  # -2 because it starts from 0 and the 1st line is headers.
         line_to_group[product_name] = group
 
-# Load the purchase transactions
 purchases_df = pd.read_csv(purchases_path)
 
 # Map products to their groups
