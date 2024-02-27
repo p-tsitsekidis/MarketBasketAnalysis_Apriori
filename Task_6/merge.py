@@ -12,7 +12,6 @@ merged_df['GroupID'] = merged_df.groupby(['CustomerID', 'Date']).ngroup()
 # Create the binary matrix for products
 binary_matrix = pd.crosstab(index=merged_df['GroupID'], columns=merged_df['Product'])
 
-# Map 'Age' to 'GroupID'
 age_mapping = merged_df[['GroupID', 'Age']].drop_duplicates().set_index('GroupID')['Age']
 
 # Map Age
